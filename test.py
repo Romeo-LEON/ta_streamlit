@@ -27,7 +27,39 @@ chosen["mabl"] = bl.bollinger_mavg()
 chosen["lbl"] =  bl.bollinger_lband()
 
 #Graphing part
-fig = px.line(x= chosen["Date"], y=[chosen["Close"],chosen["mabl"],chosen["hbl"],chosen["lbl"]],width=900, height=500)
+fig = px.line(x= chosen["Date"], y=[chosen["Close"],chosen["mabl"],chosen["hbl"],chosen["lbl"]],width=900, height=600)
 fig.update_layout(title_text="Bollinger bands for {}".format(choice_stock),xaxis_title="Date",yaxis_title="Price")
+
+# Add range slider
+fig.update_layout(
+    xaxis=dict(
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1,
+                     label="1m",
+                     step="month",
+                     stepmode="backward"),
+                dict(count=6,
+                     label="6m",
+                     step="month",
+                     stepmode="backward"),
+                dict(count=1,
+                     label="YTD",
+                     step="year",
+                     stepmode="todate"),
+                dict(count=1,
+                     label="1y",
+                     step="year",
+                     stepmode="backward"),
+                dict(step="all")
+            ])
+        ),
+        rangeslider=dict(
+            visible=True
+        ),
+        type="date"
+    )
+)
+
 
 st.plotly_chart(fig)
