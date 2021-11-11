@@ -3,6 +3,7 @@ import ta
 import yfinance as yf
 import matplotlib.pyplot as plt
 import plotly.express as px
+import numpy as np
 import streamlit as st
 
 #Header
@@ -25,6 +26,8 @@ bl = ta.volatility.BollingerBands(close=chosen["Close"], window=choice_ma, windo
 chosen["hbl"] = bl.bollinger_hband()
 chosen["mabl"] = bl.bollinger_mavg()
 chosen["lbl"] =  bl.bollinger_lband()
+
+chosen['Return'] = 100 * (chosen['Close'].pct_change())
 
 #Graphing part
 fig = px.line(x= chosen["Date"], y=[chosen["Close"],chosen["mabl"],chosen["hbl"],chosen["lbl"]],width=900, height=600)
@@ -63,3 +66,44 @@ fig.update_layout(
 
 
 st.plotly_chart(fig)
+
+daily_volatility = chosen['Return'].std()
+
+volatility =  round(np.sqrt(21) * daily_volatility,2)
+
+st.write(""" 
+### Monthly volatility of {} is {}%""".format(choice_stock,volatility))
+
+fig2 = px.line(x= chosen["Date"], y=chosen["Return"],width=900, height=600)
+
+fig2.update_layout(
+    xaxis=dict(
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1,
+                     label="1m",
+                     step="month",
+                     stepmode="backward"),
+                dict(count=6,
+                     label="6m",
+                     step="month",
+                     stepmode="backward"),
+                dict(count=1,
+                     label="YTD",
+                     step="year",
+                     stepmode="todate"),
+                dict(count=1,
+                     label="1y",
+                     step="year",
+                     stepmode="backward"),
+                dict(step="all")
+            ])
+        ),
+        rangeslider=dict(
+            visible=True
+        ),
+        type="date"
+    )
+)
+
+st.plotly_chart(fig2)
