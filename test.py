@@ -7,7 +7,7 @@ import streamlit as st
 
 #Header
 st.write("""
-# Simple Stock Price App
+# Simple Stock Price App 🦆
 """)
 
 #List of stocks
