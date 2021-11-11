@@ -18,7 +18,7 @@ choice_ma = st.sidebar.slider('Pick a moving average in days',0,365,value=20)
 choice_std = st.sidebar.slider('Pick a standard deviation',0,3, value = 2)
 
 #TA part
-chosen = yf.Ticker("{}".format(choice_stock)).history(period="12mo").reset_index()[["Date","Close"]]
+chosen = yf.Ticker("{}".format(choice_stock)).history(period="max").reset_index()[["Date","Close"]]
 
 bl = ta.volatility.BollingerBands(close=chosen["Close"], window=choice_ma, window_dev=choice_std)
 
