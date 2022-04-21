@@ -13,7 +13,9 @@ st.write("""
 """)
 
 #List of stocks
-stock = ['ADA-USD','AAPL','FB','AMZN','ARKF','ORA.PA','BAYN.DE','MSFT','ARKK','T','VB','ACA.PA','SLV','VONG','ARKG','PM','BNGO','PFE','DAI.DE','REET']
+stock = ['ADA-USD','AAPL','FB','AMZN','ARKF','ORA.PA','BAYN.DE','MSFT', \
+'ARKK','T','VB','ACA.PA','SLV','VONG','ARKG','PM','BNGO','PFE','DAI.DE','REET', \
+'MC.PA', 'NFLX', 'NVDA','BTC','LIT','WBD','MBG.DE','GOOGL']
 #Selector of stock
 choice_stock = st.sidebar.selectbox('Which stock do you want to select?', stock)
 choice_ma = st.sidebar.slider('Pick a moving average in days',0,365,value=20)
